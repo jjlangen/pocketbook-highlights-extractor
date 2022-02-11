@@ -1,16 +1,22 @@
+import argparse
+
 from bs4 import BeautifulSoup
 
 
-req = Request("https://en.wikipedia.org/wiki/Python_(programming_language)")
-html_page = urlopen(req)
+parser = argparse.ArgumentParser()
+parser.add_argument('file', nargs='?', help='location of the html file to process')
+args = parser.parse_args()
 
-soup = BeautifulSoup(html_page, "html.parser")
+with open(args.file, encoding="utf8") as page:
+    soup = BeautifulSoup(page, "html.parser")
 
 html_text = soup.get_text()
 
 f = open("html_text.txt", "w")
 
 for line in html_text:
-	f.write(line)
+    f.write(line)
 
 f.close()
+
+print("Succesfully written output to html_text.txt")
